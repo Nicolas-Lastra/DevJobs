@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import JobCard from "./JobCard";
 
-export default function Empleos() {
+export default function JobList() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
