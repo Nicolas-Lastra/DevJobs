@@ -16,8 +16,8 @@ export default function JobList() {
                 <h2 id="search-results-title">Resultados de búsqueda</h2>
 
                 <div className="jobs-listings">
-                    {data.map((item) => (
-                        <JobCard key={item.id} data={item}/>
+                    {data.map((job) => (
+                        <JobCard key={job.id} data={job}/>
                     ))}
                 </div>
 
