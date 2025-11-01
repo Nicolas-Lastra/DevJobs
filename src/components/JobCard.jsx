@@ -4,16 +4,22 @@ export default function JobCard({ data }) {
 
     const [isApplied, setIsApplied] = useState(false)
 
-    const text = isApplied ? 'Aplicado' : 'Aplicar'
-    const buttonClass = isApplied ? 'is-applied' : ''
+    // const text = isApplied ? 'Aplicado' : 'Aplicar'
+    // const buttonClass = isApplied ? 'is-applied' : ''
 
-    function handleClick() {
+    // function handleClick() {
 
-        // setIsApplied(true)
+    //     // setIsApplied(true)
 
-        // Efecto interruptor
-        setIsApplied(!isApplied)
+    //     // Efecto interruptor
+    //     setIsApplied(!isApplied)
+    // }
+
+    const handleApplyClick = () => {
+        setIsApplied(true)
     }
+    const buttonClasses = isApplied ? 'button-apply-job is-applied' : 'button-apply-job'
+    const buttonText = isApplied ? 'Aplicado' : 'Aplicar'
 
     return (
         <article
@@ -28,7 +34,7 @@ export default function JobCard({ data }) {
                     {data.descripcion}
                 </p>
             </div>
-            <button onClick={ handleClick } disabled={isApplied} className={`button-apply-job ${buttonClass}`}>{text}</button>
+            <button onClick={ handleApplyClick } disabled={isApplied} className={buttonClasses}>{buttonText}</button>
         </article>
     );
 }
