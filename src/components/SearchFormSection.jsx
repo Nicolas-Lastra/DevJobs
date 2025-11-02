@@ -13,13 +13,14 @@ export default function SearchFormSection( {onSearch, onTextFilter} ) {
         const formData = new FormData(event.target)
 
         const filters = {
-            search: formData.get(idText),
-            technology: formData.get(idTechnology),
-            location: formData.get(idLocation),
-            experienceLevel: formData.get(idExperienceLevel)
+            search: formData.get(idText) ?? '',
+            technology: formData.get(idTechnology) ?? '',
+            location: formData.get(idLocation) ?? '',
+            experienceLevel: formData.get(idExperienceLevel) ?? ''
         }
 
         onSearch(filters)
+        // console.log('Filtros desde handleSubmit en SearchFormSection.jsx', filters)
     }
 
     const handleTextChange = (event) => {
