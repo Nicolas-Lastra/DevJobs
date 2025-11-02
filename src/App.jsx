@@ -21,7 +21,9 @@ function App() {
 
   const jobsFilteredByFilters = jobsData.filter(job => {
     return (
-      (filters.technology === '' || job.data.technology === filters.technology)
+      (filters.technology === '' || job.data.technology === filters.technology) && 
+      (filters.location === '' || job.data.modalidad === filters.location) && 
+      (filters.experienceLevel === '' || job.data.nivel === filters.experienceLevel)
     )
   })
 
@@ -45,6 +47,7 @@ function App() {
   const handleSearch = (filters) => {
     setFilters(filters)
     setCurrentPage(1)
+    // console.log('Filtros desde handleSearch App.jsx', filters)
   }
 
   const handleTextFilter = (newTextToFilter) => {
