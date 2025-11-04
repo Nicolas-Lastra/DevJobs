@@ -1,6 +1,6 @@
 import { useId } from "react"
 
-export default function SearchFormSection( {onSearch, onTextFilter} ) {
+export default function SearchFormSection({ onSearch, onTextFilter }) {
 
     const idText = useId()
     const idTechnology = useId()
@@ -24,9 +24,9 @@ export default function SearchFormSection( {onSearch, onTextFilter} ) {
     }
 
     const handleTextChange = (event) => {
-    const text = event.target.value
-    onTextFilter(text)
-  }
+        const text = event.target.value
+        onTextFilter(text)
+    }
 
     return (
         <section className="jobs-search">
