@@ -45,13 +45,17 @@ function App() {
   }
 
   const handleSearch = (filters) => {
-    setFilters(filters)
+    setFilters({
+      technology: filters.technology,
+      location: filters.location,
+      experienceLevel: filters.experienceLevel
+    })
+    setTextToFilter(filters.search || '')
     setCurrentPage(1)
-    // console.log('Filtros desde handleSearch App.jsx', filters)
   }
 
-  const handleTextFilter = (newTextToFilter) => {
-    setTextToFilter(newTextToFilter)
+  const handleTextFilter = (text) => {
+    setTextToFilter(text)
     setCurrentPage(1)
   }
 
