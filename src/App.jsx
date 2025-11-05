@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import JobList from "./components/JobList";
@@ -18,6 +17,7 @@ function App() {
   const [textToFilter, setTextToFilter] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const RESULTS_PER_PAGE = 5
+  const [totalPages, setTotalPages] = useState(Math.ceil(jobsData.length / RESULTS_PER_PAGE))
 
   const jobsFilteredByFilters = jobsData.filter(job => {
     return (
@@ -33,7 +33,6 @@ function App() {
       return job.titulo.toLowerCase().includes(textToFilter.toLowerCase())
     })
 
-  const totalPages = Math.ceil(jobsData.length / RESULTS_PER_PAGE)
 
   const pagedResults = jobsWithTextFilter.slice(
     (currentPage - 1) * RESULTS_PER_PAGE,
@@ -51,12 +50,18 @@ function App() {
       experienceLevel: filters.experienceLevel
     })
     setTextToFilter(filters.search || '')
+    handleTotalPages(jobsWithTextFilter)
     setCurrentPage(1)
   }
 
   const handleTextFilter = (text) => {
     setTextToFilter(text)
+    handleTotalPages(jobsWithTextFilter)
     setCurrentPage(1)
+  }
+
+  const handleTotalPages = (filteredResults) => {
+    setTotalPages(Math.ceil(filteredResults.length / RESULTS_PER_PAGE))
   }
 
   return (
