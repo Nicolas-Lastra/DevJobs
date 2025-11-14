@@ -18,8 +18,8 @@ function Header() {
       </h1>
 
       <nav>
-        <a href="index.html">Inicio</a>
-        <a href="pages/empleos.html">Empleos</a>
+        <a href="/">Inicio</a>
+        <a href="/search">Empleos</a>
       </nav>
 
       <div>
