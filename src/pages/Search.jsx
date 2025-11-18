@@ -104,6 +104,7 @@ function SearchPage() {
         <meta name="description" content="Encuentra las mejores ofertas de trabajo para desarrolladores en DevJobs." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} />
+        <h2 id="search-results-title" style={{ textAlign: "center", padding: "1rem"}}>Resultados de búsqueda</h2>
 
         <section>
           {
