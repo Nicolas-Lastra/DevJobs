@@ -1,11 +1,15 @@
 import { useId, useState } from "react";
 
+let timeoutId = null
+
 const useSearchForm = ({ idText, idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter }) => {
   const [searchText, setSearchText] = useState('') 
   const handleSubmit = (event) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
+
+    if (event.target.name === idText) return
 
     const filters = {
       search: formData.get(idText) ?? "",
@@ -20,7 +24,12 @@ const useSearchForm = ({ idText, idTechnology, idLocation, idExperienceLevel, on
   const handleTextChange = (event) => {
     const text = event.target.value
     setSearchText(text)
-    onTextFilter(text)
+
+    if (timeoutId) clearTimeout(timeoutId) // Debounce: cancela timeout anterior
+    
+    timeoutId = setTimeout(() => {
+      onTextFilter(text)
+    }, 500)
   }
 
   return {
