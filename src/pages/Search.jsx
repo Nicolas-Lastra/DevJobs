@@ -4,7 +4,7 @@ import Pagination from "../components/Pagination";
 import SearchFormSection from "../components/SearchFormSection";
 import jobsData from '../data.json'
 
-function SearchPage() {
+const useFilters = () => {
 
   const [filters, setFilters] = useState({
     search: '',
@@ -55,6 +55,28 @@ function SearchPage() {
     setTextToFilter(text)
     setCurrentPage(1)
   }
+
+  return {
+    jobsWithTextFilter,
+    pagedResults,
+    totalPages,
+    currentPage,
+    handlePageChange,
+    handleSearch,
+    handleTextFilter
+  }
+}
+
+function SearchPage() {
+  const {
+    jobsWithTextFilter,
+    pagedResults,
+    totalPages,
+    currentPage,
+    handlePageChange,
+    handleSearch,
+    handleTextFilter
+  } = useFilters()
 
   useEffect(() => {
     document.title = `Resultados: ${jobsWithTextFilter.length}, Página ${currentPage} - DevJobs`
