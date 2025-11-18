@@ -30,6 +30,10 @@ const useFilters = () => {
         if (filters.location) params.append('type', filters.location)
         if (filters.experienceLevel) params.append('level', filters.experienceLevel)
         
+        const offset = (currentPage - 1) * RESULTS_PER_PAGE
+        params.append('limit', RESULTS_PER_PAGE)
+        params.append('offset', offset)
+
         const queryParams = params.toString()
 
         const response = await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
@@ -47,7 +51,7 @@ const useFilters = () => {
     fetchJobs()
   }, [filters, textToFilter, currentPage])
 
-  const totalPages = Math.max(1, Math.ceil(jobs.length / RESULTS_PER_PAGE))
+  const totalPages = Math.max(Math.ceil(total / RESULTS_PER_PAGE))
 
   const handlePageChange = (page) => {
     setCurrentPage(page)
@@ -92,12 +96,13 @@ function SearchPage() {
     handleTextFilter
   } = useFilters()
 
-  useEffect(() => {
-    document.title = `Resultados: ${total}, Página ${currentPage} - DevJobs`
-  }, [total, currentPage])
+  const title = loading ? `Cargando ... - DevJobs` : `Resultados: ${total}, Página ${currentPage} - DevJobs`
 
   return (
       <main>
+        <title>{title}</title>
+        <meta name="description" content="Encuentra las mejores ofertas de trabajo para desarrolladores en DevJobs." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} />
 
         <section>
