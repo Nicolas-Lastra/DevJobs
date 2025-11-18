@@ -17,6 +17,8 @@ export default function HomePage() {
 
   return (
     <main>
+      <meta name="description" content="Encuentra las mejores ofertas de trabajo para desarrolladores en DevJobs." />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <section>
         <img src="./background.webp" width="200" />
 
