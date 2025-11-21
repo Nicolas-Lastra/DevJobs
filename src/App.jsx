@@ -4,6 +4,7 @@ import SearchPage from "./pages/Search";
 import HomePage from "./pages/Home";
 import { NotFoundPage } from "./pages/404";
 import useRouter from "./hooks/useRouter";
+import Contact from "./pages/Contact";
 
 function App() {
   const { currentPath } = useRouter()
@@ -13,6 +14,8 @@ function App() {
     page = <HomePage/>
   } else if (currentPath === '/search') {
     page = <SearchPage/>
+  } else if (currentPath === '/contact') {
+    page = <Contact/>
   }
 
   return (

@@ -24,6 +24,7 @@ function Header() {
       <nav>
         <Link href="/">Inicio</Link>
         <Link href="/search">Empleos</Link>
+        <Link href="/contact">Contacto</Link>
       </nav>
 
       {/* <div>
