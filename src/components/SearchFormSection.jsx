@@ -39,7 +39,7 @@ const useSearchForm = ({ idText, idTechnology, idLocation, idExperienceLevel, on
   }
 }
 
-export default function SearchFormSection({ onSearch, onTextFilter }) {
+export default function SearchFormSection({ onSearch, onTextFilter, initialText }) {
   const idText = useId()
   const idTechnology = useId()
   const idLocation = useId()
@@ -85,10 +85,10 @@ export default function SearchFormSection({ onSearch, onTextFilter }) {
             ref={inputRef}
             name={idText}
             id="empleos-search-input"
-            // required
             type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
+            defaultValue={initialText}
           /><button onClick={handleClearInput}>✕</button>
         </div>
 
