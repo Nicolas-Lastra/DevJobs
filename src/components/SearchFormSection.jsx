@@ -1,9 +1,9 @@
-import { useId, useState } from "react";
-
-let timeoutId = null
+import { useId, useState, useRef } from "react";
 
 const useSearchForm = ({ idText, idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter }) => {
-  const [searchText, setSearchText] = useState('') 
+  const timeoutId = useRef(null)
+  const [searchText, setSearchText] = useState('')
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -25,9 +25,9 @@ const useSearchForm = ({ idText, idTechnology, idLocation, idExperienceLevel, on
     const text = event.target.value
     setSearchText(text)
 
-    if (timeoutId) clearTimeout(timeoutId) // Debounce: cancela timeout anterior
+    if (timeoutId.current) clearTimeout(timeoutId.current) // Debounce: cancela timeout anterior
     
-    timeoutId = setTimeout(() => {
+    timeoutId.current = setTimeout(() => {
       onTextFilter(text)
     }, 500)
   }
@@ -44,10 +44,18 @@ export default function SearchFormSection({ onSearch, onTextFilter }) {
   const idTechnology = useId()
   const idLocation = useId()
   const idExperienceLevel = useId()
+  const inputRef = useRef()
+
   const {
     handleSubmit,
     handleTextChange
   } = useSearchForm({ idText, idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter })
+
+  const handleClearInput = (event) => {
+    event.preventDefault()
+    inputRef.current.value = ""
+    onTextFilter("")
+  }
 
   return (
     <section className="jobs-search">
@@ -74,13 +82,14 @@ export default function SearchFormSection({ onSearch, onTextFilter }) {
           </svg>
 
           <input
+            ref={inputRef}
             name={idText}
             id="empleos-search-input"
             // required
             type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
-          />
+          /><button onClick={handleClearInput}>✕</button>
         </div>
 
         <div className="search-filters">
@@ -125,7 +134,6 @@ export default function SearchFormSection({ onSearch, onTextFilter }) {
         </div>
       </form>
 
-      <span id="filter-selected-value"></span>
     </section>
   );
 }
