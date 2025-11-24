@@ -2,17 +2,28 @@ import { useState, useEffect } from "react";
 import JobList from "../components/JobList";
 import Pagination from "../components/Pagination";
 import SearchFormSection from "../components/SearchFormSection";
+import useRouter from "../hooks/useRouter";
 
 const useFilters = () => {
 
-  const [filters, setFilters] = useState({
-    search: '',
-    technology: '',
-    location: '',
-    experienceLevel: ''
+  const [filters, setFilters] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    return {
+      search: params.get('text') || '',
+      technology: params.get('technology') || '',
+      location: params.get('type') || '',
+      experienceLevel: params.get('level') || ''
+    }
   })
-  const [textToFilter, setTextToFilter] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
+  const [textToFilter, setTextToFilter] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    return params.get('text') || ''
+  })
+  const [currentPage, setCurrentPage] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    const page = Number(params.get('page'))
+    return Number.isNaN(page) ? page : 1
+  })
   const RESULTS_PER_PAGE = 5
 
   const [jobs, setJobs] = useState([])
@@ -51,6 +62,24 @@ const useFilters = () => {
     fetchJobs()
   }, [filters, textToFilter, currentPage])
 
+  const { navigateTo } = useRouter()
+
+  useEffect(() => {
+    const params = new URLSearchParams()
+
+    if (textToFilter) params.append('text', textToFilter)
+    if (filters.technology) params.append('technology', filters.technology)
+    if (filters.location) params.append('type', filters.location)
+    if (filters.experienceLevel) params.append('level', filters.experienceLevel)
+    if (currentPage > 1) params.append('page', currentPage)
+    
+    const newUrl = params.toString()
+      ? `${window.location.pathname}?${params.toString()}`
+      : window.location.pathname
+    
+    navigateTo(newUrl)
+  }, [filters, currentPage, textToFilter, navigateTo])
+
   const totalPages = Math.max(Math.ceil(total / RESULTS_PER_PAGE))
 
   const handlePageChange = (page) => {
@@ -78,6 +107,7 @@ const useFilters = () => {
     total,
     totalPages,
     currentPage,
+    textToFilter,
     handlePageChange,
     handleSearch,
     handleTextFilter
@@ -91,6 +121,7 @@ function SearchPage() {
     total,
     totalPages,
     currentPage,
+    textToFilter,
     handlePageChange,
     handleSearch,
     handleTextFilter
@@ -102,7 +133,11 @@ function SearchPage() {
       <main>
         <title>{title}</title>
         <meta name="description" content="Encuentra las mejores ofertas de trabajo para desarrolladores en DevJobs." />
-        <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} />
+        <SearchFormSection
+          initialText={textToFilter}
+          onSearch={handleSearch}
+          onTextFilter={handleTextFilter}
+        />
         <h2 id="search-results-title" style={{ textAlign: "center", padding: "1rem"}}>Resultados de búsqueda</h2>
 
         <section>
