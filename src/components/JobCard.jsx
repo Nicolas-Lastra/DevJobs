@@ -1,19 +1,10 @@
-import { useState } from "react";
+import { useState } from "react"
+import Link from "./Link"
+import styles from "./JobCard.module.css"
 
 export default function JobCard({ data }) {
 
     const [isApplied, setIsApplied] = useState(false)
-
-    // const text = isApplied ? 'Aplicado' : 'Aplicar'
-    // const buttonClass = isApplied ? 'is-applied' : ''
-
-    // function handleClick() {
-
-    //     // setIsApplied(true)
-
-    //     // Efecto interruptor
-    //     setIsApplied(!isApplied)
-    // }
 
     const handleApplyClick = () => {
         setIsApplied(true)
@@ -25,16 +16,22 @@ export default function JobCard({ data }) {
         <article
             data-technology={data.data.technology}
             data-modalidad={data.data.modalidad}
+            data-nivel={data.data.nivel}
             className="job-listing-card"            
         >
             <div>
-                <h3>{data.titulo}</h3>
+                <Link className={styles.title} href={`/jobs/${data.id}`}>{data.titulo}</Link>
                 <small>{data.empresa} | {data.ubicacion}</small>
                 <p>
                     {data.descripcion}
                 </p>
             </div>
-            <button onClick={ handleApplyClick } disabled={isApplied} className={buttonClasses}>{buttonText}</button>
+            <div className={styles.actions}>
+                <Link href={`/jobs/${data.id}`} className={styles.details}>
+                    Ver detalles
+                </Link>
+                <button onClick={ handleApplyClick } disabled={isApplied} className={buttonClasses}>{buttonText}</button>
+            </div>
         </article>
-    );
+    )
 }
