@@ -1,24 +1,29 @@
+import { lazy, Suspense} from 'react'
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import SearchPage from "./pages/Search";
-import HomePage from "./pages/Home";
-import { NotFoundPage } from "./pages/404";
-import Contact from "./pages/Contact";
 import { Routes, Route} from 'react-router'
-import JobDetail from "./pages/Detail";
+
+const HomePage = lazy(() => import('./pages/Home.jsx'))
+const SearchPage = lazy(() => import('./pages/Search.jsx'))
+const Contact = lazy(() => import('./pages/Contact'))
+const JobDetail = lazy(() => import('./pages/Detail'))
+const NotFoundPage = lazy(() => import('./pages/404'))
 
 function App() {
 
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/jobs/:jobId" element={<JobDetail />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <Suspense fallback={<div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}
+      >Cargando ...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/jobs/:jobId" element={<JobDetail />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
       <Footer />
     </>
   );
