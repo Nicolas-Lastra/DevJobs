@@ -1,10 +1,11 @@
 import Link from "./Link";
+import { NavLink } from "react-router";
 
-function Header() {
+export default function Header() {
   return (
     <header>
       <Link href='/' style={{ textDecoration: 'none' }}>
-        <h1>
+        <h1 style={{ color: 'white' }}>
           <svg
             fill="none"
             stroke="currentColor"
@@ -22,9 +23,9 @@ function Header() {
       </Link>
 
       <nav>
-        <Link href="/">Inicio</Link>
-        <Link href="/search">Empleos</Link>
-        <Link href="/contact">Contacto</Link>
+        <NavLink className={({ isActive }) => isActive ? 'nav-link-active' : ''} to="/">Inicio</NavLink>
+        <NavLink className={({ isActive }) => isActive ? 'nav-link-active' : ''} to="/search">Empleos</NavLink>
+        <NavLink className={({ isActive }) => isActive ? 'nav-link-active' : ''} to="/contact">Contacto</NavLink>
       </nav>
 
       {/* <div>
@@ -34,5 +35,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;
