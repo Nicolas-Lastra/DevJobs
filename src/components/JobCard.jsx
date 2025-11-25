@@ -21,7 +21,7 @@ export default function JobCard({ data }) {
         >
             <div>
                 <Link className={styles.title} href={`/jobs/${data.id}`}>{data.titulo}</Link>
-                <small>{data.empresa} | {data.ubicacion}</small>
+                <small> {data.empresa} | {data.ubicacion}</small>
                 <p>
                     {data.descripcion}
                 </p>
