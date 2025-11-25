@@ -4,16 +4,21 @@ import SearchPage from "./pages/Search";
 import HomePage from "./pages/Home";
 import { NotFoundPage } from "./pages/404";
 import Contact from "./pages/Contact";
-import Route from "./components/Route";
+import { Routes, Route} from 'react-router'
+import JobDetail from "./pages/Detail";
 
 function App() {
 
   return (
     <>
       <Header />
-      <Route path="/" component={HomePage}/>
-      <Route path="/search" component={SearchPage}/>
-      <Route path="/contact" component={Contact}/>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/jobs/:jobId" element={<JobDetail />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
       <Footer />
     </>
   );
