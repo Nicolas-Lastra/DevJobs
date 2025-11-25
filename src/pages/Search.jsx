@@ -1,29 +1,27 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router";
 import JobList from "../components/JobList";
 import Pagination from "../components/Pagination";
-import SearchFormSection from "../components/SearchFormSection";
-import useRouter from "../hooks/useRouter";
+import SearchFormSection from "../components/SearchFormSection"
 
 const useFilters = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [filters, setFilters] = useState(() => {
-    const params = new URLSearchParams(window.location.search)
     return {
-      search: params.get('text') || '',
-      technology: params.get('technology') || '',
-      location: params.get('type') || '',
-      experienceLevel: params.get('level') || ''
+      technology: searchParams.get('technology') || '',
+      location: searchParams.get('type') || '',
+      experienceLevel: searchParams.get('level') || ''
     }
   })
-  const [textToFilter, setTextToFilter] = useState(() => {
-    const params = new URLSearchParams(window.location.search)
-    return params.get('text') || ''
-  })
+
+  const [textToFilter, setTextToFilter] = useState(() => searchParams.get('text') || '')
+
   const [currentPage, setCurrentPage] = useState(() => {
-    const params = new URLSearchParams(window.location.search)
-    const page = Number(params.get('page'))
+    const page = Number(searchParams.get('page'))
     return Number.isNaN(page) ? page : 1
   })
+  
   const RESULTS_PER_PAGE = 5
 
   const [jobs, setJobs] = useState([])
@@ -62,23 +60,17 @@ const useFilters = () => {
     fetchJobs()
   }, [filters, textToFilter, currentPage])
 
-  const { navigateTo } = useRouter()
-
   useEffect(() => {
-    const params = new URLSearchParams()
-
-    if (textToFilter) params.append('text', textToFilter)
-    if (filters.technology) params.append('technology', filters.technology)
-    if (filters.location) params.append('type', filters.location)
-    if (filters.experienceLevel) params.append('level', filters.experienceLevel)
-    if (currentPage > 1) params.append('page', currentPage)
-    
-    const newUrl = params.toString()
-      ? `${window.location.pathname}?${params.toString()}`
-      : window.location.pathname
-    
-    navigateTo(newUrl)
-  }, [filters, currentPage, textToFilter, navigateTo])
+    setSearchParams((params) => {
+      if (textToFilter) params.set('text', textToFilter)
+      if (filters.technology) params.set('technology', filters.technology)
+      if (filters.location) params.set('type', filters.location)
+      if (filters.experienceLevel) params.set('level', filters.experienceLevel)
+      if (currentPage > 1) params.set('page', currentPage)
+      
+      return params
+    })
+  }, [filters, currentPage, textToFilter, setSearchParams])
 
   const totalPages = Math.max(Math.ceil(total / RESULTS_PER_PAGE))
 
