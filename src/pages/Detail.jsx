@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router"
-import { useAuth } from "../context/AuthContext"
 import Link from "../components/Link"
 import snarkdown from "snarkdown"
 import styles from "./Detail.module.css"
+import { useAuthStore } from "../store/authStore"
 
 function JobSection ({ title, content }) {
     const html = snarkdown(content)
@@ -57,7 +57,7 @@ function DetailPageHeader({ job }) {
 }
 
 function DetailApplyButtion() {
-  const { isLoggedIn } = useAuth()
+  const { isLoggedIn } = useAuthStore()
 
   return (
     <button disabled={isLoggedIn === false} className={styles.applyButton}>
