@@ -1,7 +1,7 @@
-import { lazy, Suspense} from 'react'
+import { lazy, Suspense } from 'react'
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { Routes, Route} from 'react-router'
+import { Routes, Route } from 'react-router'
 
 const HomePage = lazy(() => import('./pages/Home.jsx'))
 const SearchPage = lazy(() => import('./pages/Search.jsx'))
