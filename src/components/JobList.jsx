@@ -17,7 +17,7 @@ export default function JobList({ jobs }) {
           </p>
         )}
         {jobs.map((job) => (
-          <JobCard key={job.id} data={job} />
+          <JobCard key={job.id} job={job} />
         ))}
       </div>
     </>
