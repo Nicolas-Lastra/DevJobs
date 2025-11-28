@@ -4,11 +4,16 @@ import { useAuthStore } from "../store/authStore";
 import { useFavoritesStore } from "../store/favoritesStore";
 
 const HeaderUserButton = () => {
-
+  const { clearFavorites } = useFavoritesStore()
   const { isLoggedIn, login, logout } = useAuthStore()
 
+  const handleLogout = () => {
+    logout()
+    clearFavorites()
+  }
+
   return isLoggedIn
-          ? <button onClick={logout}>Cerrar sesión</button>
+          ? <button onClick={handleLogout}>Cerrar sesión</button>
           : <button onClick={login}>Iniciar sesión</button>
       
 }
