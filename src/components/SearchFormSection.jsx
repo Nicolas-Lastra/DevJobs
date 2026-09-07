@@ -7,7 +7,7 @@ const useSearchForm = ({ idText, idTechnology, idLocation, idExperienceLevel, on
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const formData = new FormData(event.currentTarget)
+    const formData = new FormData(event.target)
 
     if (event.target.name === idText) return
 
